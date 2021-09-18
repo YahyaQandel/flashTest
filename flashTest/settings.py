@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',    
+    'rest_framework.authtoken',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -49,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'flashTest.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -69,6 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'flashTest.wsgi.application'
 
+AUTH_USER_MODEL = "user.User"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
