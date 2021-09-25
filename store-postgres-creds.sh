@@ -1,0 +1,5 @@
+export POSTGRES_DB=flashdb
+export POSTGRES_USER=fl_user
+export POSTGRES_PASSWORD=3nzsXVCtARzEg5fP
+export POSTGRES_HOST=localhost
+export POSTGRES_PORT=5432

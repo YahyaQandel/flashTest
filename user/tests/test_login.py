@@ -6,7 +6,7 @@ from user.models import User
 
 
 # Create your tests here.
-LOGIN_URL = '/v2/oauth/token'
+LOGIN_URL = '/oauth/token'
 
 
 class TestUser(TestCase):
@@ -28,7 +28,6 @@ class TestUser(TestCase):
         response_data = response.json()
         self.assertIn('id', response_data)
         self.assertIn('token', response_data)
-        print(response_data)
         user_token = Token.objects.get(key=response_data['token'])
         self.assertEquals(response_data['token'], user_token.key)
 
@@ -45,3 +44,5 @@ class TestUser(TestCase):
 
     def tearDown(self):
         User.objects.filter(id=self.user.id).delete()
+
+# TODO: login using username

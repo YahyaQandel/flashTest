@@ -15,14 +15,12 @@ class ResponseSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
-            'id',
-            'name',
+            'username',
             'email',
-            'phone'
+            'balance'
         )
         model = User
 
-    name = serializers.SerializerMethodField()
 
-    def get_name(self, user):
-        return '{} {}'.format(user.first_name, user.last_name)
+class MoneyRequestSerializer(serializers.Serializer):
+    amount = serializers.FloatField(min_value=1.0)

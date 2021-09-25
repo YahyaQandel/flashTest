@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+#set -o errexit
+#set -o nounset
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py loaddata fixtures/001_user.json
+python manage.py runserver 0.0.0.0:8000

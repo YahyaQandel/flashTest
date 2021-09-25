@@ -1,6 +1,7 @@
 from django.urls import path
-from user.views import UserApi
+from user.views import Login, Money
 
 urlpatterns = [
-    path("v2/oauth/token", UserApi.as_view(), name="login"),
+    path("oauth/token", Login.as_view(), name="login"),
+    path("user/money", Money.as_view(), name="upload"),
 ]

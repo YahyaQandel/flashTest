@@ -4,9 +4,9 @@
 
 ### Users in system:-
 ```
-username    password            role
-admin       5LP4BdB6HKvGptcD    superuser
-Cayden      testpassword        flash-user
-Viaan       test!!!pass         flash-user
-Ophelia     pass_#_user         flash-user
+username    password            role            email
+admin       5LP4BdB6HKvGptcD    superuser       admin@admin.com
+Cayden      test!!!pass         flash-user      cayden@email.com
+Viaan       test!!!pass         flash-user      viaan@email.com
+Ophelia     pass_#_user         flash-user      ophelia@email.com
 ```

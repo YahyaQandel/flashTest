@@ -1,3 +1,5 @@
 [MASTER]
 ignore=venv
 load-plugins=pylint_django
+[FORMAT]
+max-line-length=240
