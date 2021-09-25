@@ -1,11 +1,13 @@
+from user.views import Money
 from django.test import TestCase
 from rest_framework.test import APIClient
 from user.factories import UserFactory
 from rest_framework.authtoken.models import Token
 from user.models import User
 from decimal import Decimal
-from datetime import date,datetime,timedelta
+from datetime import date, datetime, timedelta
 from money.models import MoneyUploaded
+import moneyed
 
 TOKEN_TYPE = 'Bearer'
 UPLOAD_MONEY_URL = "/user/money"
@@ -48,17 +50,56 @@ class TestUserMoney(TestCase):
         self.assertEquals(response.status_code, 400)
         self.assertIn('Ensure this value is greater than or equal to 1.0.', response_data['amount'])
 
-    def testUploadMoneyExceedDailyLimit(self):
-        request_data = {"amount": Decimal(9900)}
+    def testUploadMoneyExceedWeeklyLimit(self):
+        request_data = {"amount": Decimal(7000)}
         self.amount_to_be_uploaded = request_data['amount']
-
+        today = datetime.today()
+        daily_amount = 7500
+        for i in range(1, 10):
+            day_before = today - timedelta(days=i)
+            day_before_upload_money_obj = MoneyUploaded(user=self.user, amount=daily_amount + i*10)
+            day_before_upload_money_obj.save()
+            day_before_upload_money_obj.created_at = day_before.date()
+            day_before_upload_money_obj.save()
+            self.user.balance = moneyed.Money(amount=daily_amount, currency='EGP') + self.user.balance
+            self.user.save()
+        user_old_balance = self.user.balance.amount
         response = self.api_client.post(UPLOAD_MONEY_URL, data=request_data, **self.request_headers)
         response_data = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertEqual(self.user.balance.amount, user_old_balance)
+        self.assertIn('You have exceeded your weekly limit (50k)'.format(date.today()), response_data['error'])
+
+    def testUploadMoneyNotExceedingWeeklyLimit(self):
+        request_data = {"amount": Decimal(100)}
+        self.amount_to_be_uploaded = request_data['amount']
+        today = datetime.today()
+        daily_amount = 2000
+        for i in range(1, 10):
+            day_before = today - timedelta(days=i)
+            day_before_upload_money_obj = MoneyUploaded(user=self.user, amount=daily_amount + i*10)
+            day_before_upload_money_obj.save()
+            day_before_upload_money_obj.created_at = day_before.date()
+            day_before_upload_money_obj.save()
+            self.user.balance = moneyed.Money(amount=daily_amount, currency='EGP') + self.user.balance
+            self.user.save()
+        user_old_balance = self.user.balance.amount
+        response = self.api_client.post(UPLOAD_MONEY_URL, data=request_data, **self.request_headers)
+        self.user = User.objects.get(email=self.user.email)
+        self.assertEquals(response.status_code, 200)
+        self.assertEqual(self.user.balance.amount, user_old_balance + request_data['amount'])
+        
+    def testUploadMoneyExceedDailyLimit(self):
+        user_old_balance = self.user.balance.amount
+        request_data = {"amount": Decimal(9900)}
+        self.amount_to_be_uploaded = request_data['amount']
+        response = self.api_client.post(UPLOAD_MONEY_URL, data=request_data, **self.request_headers)
         self.assertEquals(response.status_code, 200)
         request_data = {"amount": Decimal(200)}
         response = self.api_client.post(UPLOAD_MONEY_URL, data=request_data, **self.request_headers)
         response_data = response.json()
         self.assertEquals(response.status_code, 400)
+        self.assertEqual(self.user.balance.amount, user_old_balance)
         self.assertIn('You have exceeded your daily limit (10k) for ({})'.format(date.today()), response_data['error'])
 
     def testUploadAmountThatExceedsDailyLimitInOneTransaction(self):
@@ -84,22 +125,5 @@ class TestUserMoney(TestCase):
         self.assertEqual(self.user.balance.amount, request_data['amount'] + user_old_balance)
 
 
-    # def tearDown(self) -> None:
-    #     try:
-    #         money_uploaded_today = MoneyUploaded.objects.filter(created_at__gte= datetime.now() - timedelta(days=1))
-    #     except MoneyUploaded.DoesNotExist:
-    #         pass
-    #     if not money_uploaded_today:
-    #         money_uploaded_now = MoneyUploaded(user=self.user, amount= self.amount_to_be_uploaded)
-    #         money_uploaded_now.save()
-    #     else:
-    #         total_amount_uploaded_today = 0
-    #         for one_time_upload in money_uploaded_today:
-    #             total_amount_uploaded_today += one_time_upload.amount.amount
-    #             print(one_time_upload.amount)
-    #         print(total_amount_uploaded_today)
-
 # test unaothorized user
 # test user not exists and tries to upload money
-# test upload exceeds daily limit
-# test upload exceeds weekly limit
