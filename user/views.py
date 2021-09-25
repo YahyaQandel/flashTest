@@ -33,6 +33,7 @@ class Login(APIView):
         return Response(data=ResponseSerializer(user).data, status=status.HTTP_200_OK)
 
 
+DAILY_LIMIT = 10000
 class Money(APIView):
     class_serializer = MoneyRequestSerializer
     permission_classes = (
@@ -49,7 +50,7 @@ class Money(APIView):
         except MoneyUploaded.DoesNotExist:
             pass
         if not money_uploaded_today:
-            if amount_to_be_uploaded > 10000:
+            if amount_to_be_uploaded > DAILY_LIMIT:
                 return Response(
                     data={"error": "Maximum amount to be uploaded 9999"},
                     status=status.HTTP_400_BAD_REQUEST)
