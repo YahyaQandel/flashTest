@@ -12,6 +12,7 @@ from user.models import User
 from money.models import MoneyUploaded
 from user.serializer import LoginRequestSerializer, ResponseSerializer, MoneyRequestSerializer, UserSerializer
 import moneyed
+import re   
 
 class Login(APIView):
     class_serializer = LoginRequestSerializer
@@ -21,7 +22,16 @@ class Login(APIView):
         serializer.is_valid(raise_exception=True)
         try:
             user_password = request.data['password']
-            user = User.objects.get(email=request.data['email'])
+            if "username" in request.data:
+                username = request.data['username']
+                user = User.objects.get(username=username)
+            elif "email" in request.data:
+                user_email = request.data['email']
+                user = User.objects.get(email=user_email)
+            else:
+                return Response(
+                    data={"detail": "either provide your email or your username"},
+                    status=status.HTTP_401_UNAUTHORIZED)
             if not user.check_password(user_password):
                 return Response(
                     data={"detail": "The user credentials were incorrect."},
@@ -32,6 +42,13 @@ class Login(APIView):
         token, _ = Token.objects.get_or_create(user=user)
         return Response(data=ResponseSerializer(user).data, status=status.HTTP_200_OK)
 
+
+  
+    def is_valid_email(self, email):   
+        regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'  
+        if(re.search(regex, email)):   
+            return True
+        return False
 
 DAILY_LIMIT = 10000
 WEEKLY_LIMIT = 50000
@@ -69,7 +86,6 @@ class Money(APIView):
         user.save()
         return Response(data=UserSerializer(user).data, status=status.HTTP_200_OK)
 
-
     def get_total_amount_uploaded_in(self, required_day):
         money_uploaded_today = None
         day_before = required_day - timedelta(days=1)
@@ -82,7 +98,6 @@ class Money(APIView):
             for one_time_upload in money_uploaded_today:
                 total_amount_uploaded_today += one_time_upload.amount.amount
         return total_amount_uploaded_today
-
 
     def get_total_amount_uploaded_in_current_week(self):
         today = datetime.today()

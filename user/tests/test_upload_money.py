@@ -113,6 +113,16 @@ class TestUserMoney(TestCase):
         self.assertEqual(self.user.balance.amount, user_old_balance)
         self.assertIn('Maximum amount to be uploaded 9999', response_data['error'])
     
+    def testUploadMoneyWithUnAuthorizedUser(self):
+        user_token = "invalid_token"
+        unauthorized_headers = {'HTTP_AUTHORIZATION': '{} {}'.format(TOKEN_TYPE, user_token)}
+        request_data = {"amount": 100}
+        self.amount_to_be_uploaded = request_data['amount']
+        response = self.api_client.post(UPLOAD_MONEY_URL, data=request_data, **unauthorized_headers)
+        response_data = response.json()
+        self.assertIn("Invalid token.", response_data['detail'])
+
+
     def testUploadMoney(self):
         user_old_balance = self.user.balance.amount
         request_data = {"amount": self.user.balance.amount + 100}
@@ -124,12 +134,4 @@ class TestUserMoney(TestCase):
         self.assertEqual(Decimal(response_data['balance']), request_data['amount'] + user_old_balance)
         self.assertEqual(self.user.balance.amount, request_data['amount'] + user_old_balance)
 
-    def testUploadMoneyWithUnAuthorizedUser(self):
-        user_token = "invalid_token"
-        unauthorized_headers = {'HTTP_AUTHORIZATION': '{} {}'.format(TOKEN_TYPE, user_token)}
-        request_data = {"amount": 100}
-        self.amount_to_be_uploaded = request_data['amount']
-        response = self.api_client.post(UPLOAD_MONEY_URL, data=request_data, **unauthorized_headers)
-        response_data = response.json()
-        self.assertIn("Invalid token.", response_data['detail'])
-
+ 

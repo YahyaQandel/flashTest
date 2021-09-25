@@ -3,8 +3,9 @@ from user.models import User
 
 
 class LoginRequestSerializer(serializers.Serializer):
-    email = serializers.CharField()
+    email = serializers.CharField(required=False)
     password = serializers.CharField()
+    username = serializers.CharField(required=False)
 
 
 class ResponseSerializer(serializers.Serializer):
