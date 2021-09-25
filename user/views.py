@@ -43,13 +43,6 @@ class Login(APIView):
         return Response(data=ResponseSerializer(user).data, status=status.HTTP_200_OK)
 
 
-  
-    def is_valid_email(self, email):   
-        regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'  
-        if(re.search(regex, email)):   
-            return True
-        return False
-
 DAILY_LIMIT = 10000
 WEEKLY_LIMIT = 50000
 class Money(APIView):

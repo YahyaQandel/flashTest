@@ -6,9 +6,9 @@
 ```
 username    password            role            email
 admin       5LP4BdB6HKvGptcD    superuser       admin@admin.com
-cayden      test!!!pass         flash-user      cayden@email.com
-viaan       test!!!pass         flash-user      viaan@email.com
-ophelia     pass_#_user         flash-user      ophelia@email.com
+cayden      8JmLGgZUsWKPcKUQ    flash-user      cayden@email.com
+viaan       Jvuh6MUCX5H9Veq6    flash-user      viaan@email.com
+ophelia     dmRzjkAR8Uw7AJBh    flash-user      ophelia@email.com
 ```
 
 #### for the all upcoming stories you just needs to have good internet connection and to run
@@ -16,9 +16,11 @@ ophelia     pass_#_user         flash-user      ophelia@email.com
 
 ## Story 1 ( user can login using username or email )
 
-send `post` request to `localhost:8000/oauth/token`
+`post` request to `localhost:8000/oauth/token`
 ```
-body {"username":"cayden","password":"test!!!pass"}
+curl --request POST  --url http://localhost:8000/oauth/token  --header 'Content-Type: application/json'  --data "{\"username\": \"ophelia\",\"password\": \"pass_#_user\"}"
+```
 or
-body {"email":"cayden@email.com","password":"test!!!pass"}
+```
+curl --request POST  --url http://localhost:8000/oauth/token  --header 'Content-Type: application/json'  --data "{\"email\": \"ophelia@email.com\",\"password\": \"pass_#_user\"}"
 ```
