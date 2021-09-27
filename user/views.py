@@ -1,104 +1,99 @@
 from decimal import Decimal
+import re
 from moneyed.classes import EGP
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from django.http import HttpResponseRedirect
 
 from datetime import date, datetime, timedelta
 
 from user.models import User
 from money.models import MoneyUploaded
-from user.serializer import LoginRequestSerializer, ResponseSerializer, MoneyRequestSerializer, UserSerializer
-import moneyed
-import re   
+from user.serializer import LoginRequestSerializer, ResponseSerializer
+from rest_framework.renderers import TemplateHTMLRenderer
+from django.shortcuts import render
+from django.shortcuts import redirect
 
 class Login(APIView):
+
     class_serializer = LoginRequestSerializer
 
     def post(self, request, format=None):
         serializer = LoginRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        try:
-            user_password = request.data['password']
-            if "username" in request.data:
-                username = request.data['username']
-                user = User.objects.get(username=username)
-            elif "email" in request.data:
-                user_email = request.data['email']
-                user = User.objects.get(email=user_email)
-            else:
-                return Response(
-                    data={"detail": "either provide your email or your username"},
-                    status=status.HTTP_401_UNAUTHORIZED)
-            if not user.check_password(user_password):
-                return Response(
-                    data={"detail": "The user credentials were incorrect."},
-                    status=status.HTTP_401_UNAUTHORIZED)
-        except User.DoesNotExist:
-            return Response(data={"detail": "The user credentials were incorrect."},
-                            status=status.HTTP_401_UNAUTHORIZED)
-        token, _ = Token.objects.get_or_create(user=user)
-        return Response(data=ResponseSerializer(user).data, status=status.HTTP_200_OK)
+        is_valid_params, response = validate_login_request_params(request)
+        if not is_valid_params:
+            return response
+        params = response
+        is_valid_login_creds, response = validate_user_login(params=params, password=request.data['password'])
+        if is_valid_login_creds:
+            user = response
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response(data=ResponseSerializer(user).data, status=status.HTTP_200_OK)
+        else:
+            return response
 
-
-DAILY_LIMIT = 10000
-WEEKLY_LIMIT = 50000
-class Money(APIView):
-    class_serializer = MoneyRequestSerializer
-    permission_classes = (
-        IsAuthenticated,
-    )
+class TemplateLogin(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'login.html'
+    class_serializer = LoginRequestSerializer
+    
+    def get(self, request):
+        if request.session.session_key:
+            return redirect(to="/bank/connect")
+        return Response()
 
     def post(self, request, format=None):
-        serializer = MoneyRequestSerializer(data=request.data)
+        serializer = LoginRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        amount_to_be_uploaded = Decimal(request.data['amount'])
+        is_valid_params, response = validate_login_request_params(request)
+        if not is_valid_params:
+            return response
+        params = response
+        is_valid_login_creds, response = validate_user_login(params=params, password=request.data['password'])
+        if is_valid_login_creds:
+            user = response
+            request.session.set_test_cookie()
+            request.session['user'] = user.id
+            return redirect(to="/bank/connect")
+        else:
+            return redirect(to="/unauthorized")
 
-        if amount_to_be_uploaded > DAILY_LIMIT:
-                return Response(
-                    data={"error": "Maximum amount to be uploaded 9999"},
-                    status=status.HTTP_400_BAD_REQUEST)
 
-        total_amount_uploaded_today = self.get_total_amount_uploaded_in(date.today())
-        if total_amount_uploaded_today + amount_to_be_uploaded > DAILY_LIMIT:
-            return Response(
-                data={"error": "You have exceeded your daily limit (10k) for ({})".format(date.today())},
-                status=status.HTTP_400_BAD_REQUEST)
-        total_amount_uploaded_current_week = self.get_total_amount_uploaded_in_current_week()
-        if total_amount_uploaded_current_week > WEEKLY_LIMIT:
-            return Response(
-                data={"error": 'You have exceeded your weekly limit (50k)'},
-                status=status.HTTP_400_BAD_REQUEST)
-        money_uploaded_now = MoneyUploaded(user=request.user,amount= amount_to_be_uploaded)
-        money_uploaded_now.save()
-        user = User.objects.get(email=request.user.email)
-        new_balance = amount_to_be_uploaded + user.balance.amount
-        user.balance = moneyed.Money(amount=new_balance, currency="EGP")
-        user.save()
-        return Response(data=UserSerializer(user).data, status=status.HTTP_200_OK)
+class UnAuthorized(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'unauthorized.html'
+    class_serializer = LoginRequestSerializer
+    
+    def get(self, request):
+        return Response()
 
-    def get_total_amount_uploaded_in(self, required_day):
-        money_uploaded_today = None
-        day_before = required_day - timedelta(days=1)
-        try:
-            money_uploaded_today = MoneyUploaded.objects.filter(created_at__gt=day_before, created_at__lte= required_day)
-        except MoneyUploaded.DoesNotExist:
-            pass
-        total_amount_uploaded_today = 0
-        if money_uploaded_today:
-            for one_time_upload in money_uploaded_today:
-                total_amount_uploaded_today += one_time_upload.amount.amount
-        return total_amount_uploaded_today
+def validate_user_login(params, password):
+    try:
+        user = User.objects.get(**params)
+        if not user.check_password(password):
+            return False, Response(
+                data={"detail": "The user credentials were incorrect."},
+                status=status.HTTP_401_UNAUTHORIZED)
+    except User.DoesNotExist:
+        return False, Response(data={"detail": "The user credentials were incorrect."},
+                        status=status.HTTP_401_UNAUTHORIZED)
+    return True, user
 
-    def get_total_amount_uploaded_in_current_week(self):
-        today = datetime.today()
-        total_amount_uploaded_current_week = 0
-        for i in range(1, 8):
-            day = today - timedelta(days=i)
-            day_amount = self.get_total_amount_uploaded_in(day)
-            total_amount_uploaded_current_week += day_amount
-            # print("day:{}-amount:{}".format(day, day_amount))
-        # print(total_amount_uploaded_current_week)
-        return total_amount_uploaded_current_week
+
+def validate_login_request_params(request):
+    login_args = None
+    if "username" in request.data:
+        login_args = {"username": request.data['username']}
+        return True, login_args
+    elif "email" in request.data:
+        login_args = {"email": request.data['email']}
+        return True, login_args
+    else:
+        return False, Response(
+            data={"detail": "either provide your email or your username"},
+            status=status.HTTP_401_UNAUTHORIZED)
+    

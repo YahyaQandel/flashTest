@@ -12,10 +12,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import environ
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
+#   STATIC_ROOT = os.path.join(SETTINGS_PATH, "static")
+STATICFILES_DIRS = (
+    os.path.join(SETTINGS_PATH, "static"),
+)
 env = environ.Env()
 
 # Quick-start development settings - unsuitable for production
@@ -27,7 +32,7 @@ SECRET_KEY = 'django-insecure-romy7r!)a!32po9277g2jci-5ecj29(f@9!zi^&eh%2%j5aj+b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,7 +48,8 @@ INSTALLED_APPS = [
     'djmoney',
     'rest_framework.authtoken',
     'user',
-    'money'
+    'money',
+    'bank'
 ]
 
 MIDDLEWARE = [
@@ -69,7 +75,7 @@ ROOT_URLCONF = 'urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS':  [os.path.join(SETTINGS_PATH, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

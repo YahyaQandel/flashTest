@@ -15,6 +15,11 @@
           "--django-settings-module=<mainapp>.settings",
       ],
     "python.linting.pycodestylePath": "venv/bin/pep8",
-    "python.linting.pycodestyleEnabled": true
+    "python.linting.pycodestyleEnabled": true,
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 
 }

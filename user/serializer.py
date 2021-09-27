@@ -22,6 +22,3 @@ class UserSerializer(serializers.ModelSerializer):
         )
         model = User
 
-
-class MoneyRequestSerializer(serializers.Serializer):
-    amount = serializers.FloatField(min_value=1.0)

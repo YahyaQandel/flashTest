@@ -1,7 +1,8 @@
 from django.urls import path
-from user.views import Login, Money
+from user.views import Login, TemplateLogin,UnAuthorized
 
 urlpatterns = [
-    path("oauth/token", Login.as_view(), name="login"),
-    path("user/money", Money.as_view(), name="upload"),
+    path("oauth/token", Login.as_view(), name="api_login"),
+    path("login", TemplateLogin.as_view(), name="template_login"),
+    path("unauthorized", UnAuthorized.as_view(), name="access_denied")
 ]
