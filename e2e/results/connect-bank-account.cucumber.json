@@ -22,7 +22,7 @@
             "name": "there is no registered users",
             "result": {
               "status": "passed",
-              "duration": 412000000
+              "duration": 423000000
             }
           },
           {
@@ -32,7 +32,7 @@
             "name": "user visits connect bank page",
             "result": {
               "status": "passed",
-              "duration": 166000000
+              "duration": 223000000
             }
           },
           {
@@ -42,7 +42,7 @@
             "name": "user will be redirected to \"/login\" to login",
             "result": {
               "status": "passed",
-              "duration": 16000000
+              "duration": 18000000
             }
           }
         ]
@@ -62,7 +62,7 @@
             "name": "there is a registered user has no bank account connected",
             "result": {
               "status": "passed",
-              "duration": 37000000
+              "duration": 36000000
             }
           },
           {
@@ -72,7 +72,7 @@
             "name": "user visits login page",
             "result": {
               "status": "passed",
-              "duration": 64000000
+              "duration": 79000000
             }
           },
           {
@@ -82,7 +82,7 @@
             "name": "user logs in to system",
             "result": {
               "status": "passed",
-              "duration": 948000000
+              "duration": 999000000
             }
           },
           {
@@ -92,7 +92,7 @@
             "name": "user visits connect bank page",
             "result": {
               "status": "passed",
-              "duration": 56000000
+              "duration": 57000000
             }
           },
           {
@@ -102,7 +102,7 @@
             "name": "fill bank field \"random\" and branch name \"Maadi\" and account number \"random\" and account holder name \"flashTestUser\"",
             "result": {
               "status": "passed",
-              "duration": 1164000000
+              "duration": 1262000000
             }
           },
           {
@@ -112,7 +112,7 @@
             "name": "user will be redirected to \"/bank/connected\" bank connected",
             "result": {
               "status": "passed",
-              "duration": 5000000
+              "duration": 7000000
             }
           },
           {
@@ -122,7 +122,7 @@
             "name": "bank name should be \"random\" and account number should be \"random\"",
             "result": {
               "status": "passed",
-              "duration": 441000000
+              "duration": 580000000
             }
           }
         ]

@@ -22,7 +22,7 @@
             "name": "there is a registered user without connecting his bank account",
             "result": {
               "status": "passed",
-              "duration": 303000000
+              "duration": 377000000
             }
           },
           {
@@ -32,7 +32,7 @@
             "name": "user visits login page",
             "result": {
               "status": "passed",
-              "duration": 80000000
+              "duration": 81000000
             }
           },
           {
@@ -42,7 +42,7 @@
             "name": "user logs in to system",
             "result": {
               "status": "passed",
-              "duration": 951000000
+              "duration": 858000000
             }
           },
           {
@@ -52,7 +52,7 @@
             "name": "user will be redirected to \"/bank/connect\" that verifies he didnt connect his bank account",
             "result": {
               "status": "passed",
-              "duration": 15000000
+              "duration": 17000000
             }
           }
         ]
@@ -72,7 +72,7 @@
             "name": "there is a registered user without connecting his bank account",
             "result": {
               "status": "passed",
-              "duration": 35000000
+              "duration": 38000000
             }
           },
           {
@@ -82,7 +82,7 @@
             "name": "that user has connected his bank account",
             "result": {
               "status": "passed",
-              "duration": 220000000
+              "duration": 202000000
             }
           },
           {
@@ -92,7 +92,7 @@
             "name": "user visits login page",
             "result": {
               "status": "passed",
-              "duration": 104000000
+              "duration": 99000000
             }
           },
           {
@@ -102,7 +102,7 @@
             "name": "user logs in to system",
             "result": {
               "status": "passed",
-              "duration": 851000000
+              "duration": 820000000
             }
           },
           {

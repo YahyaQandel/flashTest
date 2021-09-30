@@ -3,7 +3,7 @@ from rest_framework.test import APIClient
 from user.models import User
 
 # Create your tests here.
-REGISTER_URL = '/user/register'
+REGISTER_URL = '/api/v1/user/register'
 
 
 class TestRegister(TestCase):

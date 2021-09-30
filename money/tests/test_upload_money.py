@@ -9,7 +9,7 @@ from money.models import MoneyUploaded
 import moneyed
 
 TOKEN_TYPE = 'Bearer'
-UPLOAD_MONEY_URL = "/user/money"
+UPLOAD_MONEY_URL = "/api/v1/money/upload"
 
 
 def get_request_authentication_headers(user):

@@ -3,8 +3,8 @@ from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
 from bank.factories import BankFactory
 TOKEN_TYPE = 'Bearer'
-BANK_DISCONNECT = "/bank/disconnect"
-BANK_CONNECT = "/bank/api/connect"
+BANK_DISCONNECT = "/api/v1/bank/disconnect"
+BANK_CONNECT = "/api/v1/bank/connect"
 
 from user.tests.utils import get_request_authentication_headers
 

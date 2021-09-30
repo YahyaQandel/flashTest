@@ -1,9 +1,8 @@
-import { UserApi } from "../apis/user.api";
 import { BankFactory } from "../models/bank";
 
 export class BankApi {
-    private deleteApiUrl: string = '/bank/disconnect';
-    private connectApiUrl: string = '/bank/connect';
+    private deleteApiUrl: string = '/api/v1/bank/disconnect';
+    private connectApiUrl: string = '/api/v1/bank/connect';
     deleteAccount(userToken: any, account_number: string) {
         const options = {
             url: `${Cypress.config().baseUrl}${this.deleteApiUrl}?account_number=${account_number}`,

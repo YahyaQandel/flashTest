@@ -5,7 +5,7 @@ from rest_framework.authtoken.models import Token
 from user.models import User
 from user.tests.utils import get_request_authentication_headers
 
-DELETE_URL = '/user/delete'
+DELETE_URL = '/api/v1/user/delete'
 
 
 class TestDelete(TestCase):

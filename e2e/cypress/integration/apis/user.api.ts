@@ -2,8 +2,8 @@ import { UserFactory } from "../models/user";
 
 export class UserApi {
     private loginUrl: string = '/oauth/token';
-    private registerUrl: string = '/user/register';
-    private deleteUrl: string = '/user/delete';
+    private registerUrl: string = '/api/v1/user/register';
+    private deleteUrl: string = '/api/v1/user/delete';
 
     login(username: string, password:string) {
         const options = {
