@@ -9,7 +9,7 @@ from user.models import User
 LOGIN_URL = '/oauth/token'
 
 
-class TestUser(TestCase):
+class TestLogin(TestCase):
 
     def setUp(self):
         self.api_client = APIClient()
@@ -67,5 +67,3 @@ class TestUser(TestCase):
 
     def tearDown(self):
         User.objects.filter(id=self.user.id).delete()
-
-# TODO: login using username

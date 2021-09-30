@@ -1,0 +1,132 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "Test Flash User Can Connect His Bank Account",
+    "line": 1,
+    "id": "test-flash-user-can-connect-his-bank-account",
+    "tags": [],
+    "uri": "connect-bank-account.feature",
+    "elements": [
+      {
+        "id": "test-flash-user-can-connect-his-bank-account;verify-unauthorized-user-cannot-access-connect-bank-page",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "verify unauthorized user cannot access connect bank page",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "there is no registered users",
+            "result": {
+              "status": "passed",
+              "duration": 412000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "user visits connect bank page",
+            "result": {
+              "status": "passed",
+              "duration": 166000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 5,
+            "name": "user will be redirected to \"/login\" to login",
+            "result": {
+              "status": "passed",
+              "duration": 16000000
+            }
+          }
+        ]
+      },
+      {
+        "id": "test-flash-user-can-connect-his-bank-account;verify-registered-user-can-connect-his-bank",
+        "keyword": "Scenario",
+        "line": 7,
+        "name": "verify registered user can connect his bank",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "there is a registered user has no bank account connected",
+            "result": {
+              "status": "passed",
+              "duration": 37000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 9,
+            "name": "user visits login page",
+            "result": {
+              "status": "passed",
+              "duration": 64000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "user logs in to system",
+            "result": {
+              "status": "passed",
+              "duration": 948000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 11,
+            "name": "user visits connect bank page",
+            "result": {
+              "status": "passed",
+              "duration": 56000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 12,
+            "name": "fill bank field \"random\" and branch name \"Maadi\" and account number \"random\" and account holder name \"flashTestUser\"",
+            "result": {
+              "status": "passed",
+              "duration": 1164000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 13,
+            "name": "user will be redirected to \"/bank/connected\" bank connected",
+            "result": {
+              "status": "passed",
+              "duration": 5000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 14,
+            "name": "bank name should be \"random\" and account number should be \"random\"",
+            "result": {
+              "status": "passed",
+              "duration": 441000000
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

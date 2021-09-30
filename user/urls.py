@@ -1,8 +1,7 @@
 from django.urls import path
-from user.views import Login, TemplateLogin,UnAuthorized
+from user.views import Register, Remove
 
 urlpatterns = [
-    path("oauth/token", Login.as_view(), name="api_login"),
-    path("login", TemplateLogin.as_view(), name="template_login"),
-    path("unauthorized", UnAuthorized.as_view(), name="access_denied")
+    path("register", Register.as_view(), name="register"),
+    path("delete", Remove.as_view(), name="delete")
 ]

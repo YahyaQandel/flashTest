@@ -22,3 +22,16 @@ class UserSerializer(serializers.ModelSerializer):
         )
         model = User
 
+
+class RegisterUserSerializer(serializers.ModelSerializer):
+    email = serializers.CharField()
+    password = serializers.CharField()
+    username = serializers.CharField()
+
+    class Meta:
+        fields = (
+            'username',
+            'email',
+            'password'
+        )
+        model = User

@@ -1,0 +1,122 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "Test Flash User Login",
+    "line": 1,
+    "id": "test-flash-user-login",
+    "tags": [],
+    "uri": "login.feature",
+    "elements": [
+      {
+        "id": "test-flash-user-login;verify-login-using-valid-credentials-with-user-not-connected-to-bank-account",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "verify login using valid credentials with user not connected to bank account",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "there is a registered user without connecting his bank account",
+            "result": {
+              "status": "passed",
+              "duration": 303000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "user visits login page",
+            "result": {
+              "status": "passed",
+              "duration": 80000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 5,
+            "name": "user logs in to system",
+            "result": {
+              "status": "passed",
+              "duration": 951000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 6,
+            "name": "user will be redirected to \"/bank/connect\" that verifies he didnt connect his bank account",
+            "result": {
+              "status": "passed",
+              "duration": 15000000
+            }
+          }
+        ]
+      },
+      {
+        "id": "test-flash-user-login;verify-login-using-valid-credentials-with-user-connected-to-bank-account",
+        "keyword": "Scenario",
+        "line": 9,
+        "name": "verify login using valid credentials with user connected to bank account",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 10,
+            "name": "there is a registered user without connecting his bank account",
+            "result": {
+              "status": "passed",
+              "duration": 35000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 11,
+            "name": "that user has connected his bank account",
+            "result": {
+              "status": "passed",
+              "duration": 220000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 12,
+            "name": "user visits login page",
+            "result": {
+              "status": "passed",
+              "duration": 104000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 13,
+            "name": "user logs in to system",
+            "result": {
+              "status": "passed",
+              "duration": 851000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 14,
+            "name": "user will be redirected to \"/bank/connected\" that verifies he has connected his bank account",
+            "result": {
+              "status": "passed",
+              "duration": 5000000
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
