@@ -9,7 +9,7 @@ urlpatterns = [
     path("oauth/token", Login.as_view(), name="api_login"),
     path("login", TemplateLogin.as_view(), name="template_login"),
     path("unauthorized", UnAuthorized.as_view(), name="access_denied"),
-    path('user/', include('user.urls')), 
+    path('user/', include('user.urls')),
     path('bank/', include('bank.urls')), 
     path('api/v1/money/', include('money.api_urls')), 
     path('api/v1/bank/', include('bank.api_urls')), 

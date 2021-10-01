@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers , fields
 from user.models import User
 
 
@@ -35,3 +35,4 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             'password'
         )
         model = User
+

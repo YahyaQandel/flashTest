@@ -13,7 +13,8 @@ from money.models import MoneyUploaded
 from money.serializer import MoneyRequestSerializer
 from user.serializer import UserSerializer
 import moneyed
-import re   
+from bank.models import Bank
+from bank.views import  is_user_connected_to_bank
 
 DAILY_LIMIT = 10000
 WEEKLY_LIMIT = 50000
@@ -27,6 +28,11 @@ class Upload(APIView):
         serializer = MoneyRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         amount_to_be_uploaded = Decimal(request.data['amount'])
+
+        if not is_user_connected_to_bank(request.user):
+            return Response(
+                    data={"error": "user doesnt have a bank account connected"},
+                    status=status.HTTP_400_BAD_REQUEST)
 
         if amount_to_be_uploaded > DAILY_LIMIT:
                 return Response(

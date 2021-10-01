@@ -7,6 +7,8 @@ from decimal import Decimal
 from datetime import date, datetime, timedelta
 from money.models import MoneyUploaded
 import moneyed
+from bank.factories import BankFactory
+from bank.models import Bank
 
 TOKEN_TYPE = 'Bearer'
 UPLOAD_MONEY_URL = "/api/v1/money/upload"
@@ -24,7 +26,8 @@ class TestMoneyUpload(TestCase):
 
     def setUp(self):
         self.api_client = APIClient()
-        self.user = UserFactory()
+        self.bank = BankFactory()
+        self.user = self.bank.user
         self.request_headers = get_request_authentication_headers(self.user)
         self.amount_to_be_uploaded = 0
 
@@ -121,6 +124,17 @@ class TestMoneyUpload(TestCase):
         response_data = response.json()
         self.assertIn("Invalid token.", response_data['detail'])
 
+    def testUploadMoneyWithoutConnectedBank(self):
+        user_old_balance = self.user.balance.amount
+        Bank.objects.all().delete()
+        request_data = {"amount": self.user.balance.amount + 100}
+        self.amount_to_be_uploaded = request_data['amount']
+        response = self.api_client.post(UPLOAD_MONEY_URL, data=request_data, **self.request_headers)
+        response_data = response.json()
+        self.assertEquals(response.status_code, 400)
+        self.assertEquals(response_data, {'error': 'user doesnt have a bank account connected'})
+        self.user = User.objects.get(email=self.user.email)
+        self.assertEqual(self.user.balance.amount, user_old_balance)
 
     def testUploadMoney(self):
         user_old_balance = self.user.balance.amount

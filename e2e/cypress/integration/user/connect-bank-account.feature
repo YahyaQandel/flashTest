@@ -13,4 +13,4 @@ Feature: Test Flash User Can Connect His Bank Account
 		Then user will be redirected to "/bank/connected" bank connected
 		Then bank name should be "random" and account number should be "random"
 
-	# required fields validatio
+#TODO: required fields validatio

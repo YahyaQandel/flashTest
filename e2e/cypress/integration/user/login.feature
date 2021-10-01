@@ -12,3 +12,6 @@ Feature: Test Flash User Login
 		When user visits login page
 		And user logs in to system
         Then user will be redirected to "/bank/connected" that verifies he has connected his bank account
+
+
+#TODO: invalid login scenario

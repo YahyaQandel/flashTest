@@ -154,3 +154,11 @@ def validate_login_request_params(request):
             data={"detail": "either provide your email or your username"},
             status=status.HTTP_401_UNAUTHORIZED)
     
+
+class Balance(APIView):
+    permission_classes = (
+        IsAuthenticated,
+    )
+
+    def get(self, request):
+        return Response({"balance": request.user.balance.amount}, status=status.HTTP_200_OK)

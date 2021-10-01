@@ -1,0 +1,15 @@
+[
+    {
+        "model": "bank.bank",
+        "pk": 1,
+        "fields": {
+            "is_removed": false,
+            "user": 2,
+            "bank_name": "CIB",
+            "branch_number": "080",
+            "account_number": "1000301230314",
+            "account_holder_name": "Yahya Qandel",
+            "name_ref": ""
+        }
+    }
+]
