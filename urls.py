@@ -11,6 +11,7 @@ urlpatterns = [
     path("unauthorized", UnAuthorized.as_view(), name="access_denied"),
     path('user/', include('user.urls')),
     path('bank/', include('bank.urls')), 
+    path('money/', include('money.urls')), 
     path('api/v1/money/', include('money.api_urls')), 
     path('api/v1/bank/', include('bank.api_urls')), 
     path('api/v1/user/', include('user.api_urls')), 

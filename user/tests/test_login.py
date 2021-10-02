@@ -61,9 +61,9 @@ class TestLogin(TestCase):
         }
         response = self.api_client.post(LOGIN_URL, data)
         response_data = response.json()
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 400)
         self.assertIn('detail', response_data)
-        self.assertEquals(response_data['detail'], "either provide your email or your username")
+        self.assertEquals(response_data['detail'], "either provide an email or a username")
 
     def tearDown(self):
         User.objects.filter(id=self.user.id).delete()

@@ -45,16 +45,29 @@
 </head>
 
 <body>
-  <h1>Login</h1>
+  <h1>Currency Exchange</h1>
   <div>
-    <form method="post" action="/login">
 
-      <input type="text" id="username" name="username" placeholder="username">
+    <form method="post" action="/money/currency/exchange">
+      <p for="curr">Base currency</p>
+        <select id="currency" name="currency">
+        {% for curr in currencies %}
+          <option value="{{curr}}" {% if curr == base_curr %} 
+                                      selected
+                                  {%endif%}>{{curr}}
+                                  </option>
+        {% endfor %}
+        </select>
+        <p><b>Exhange rates :  </b></p>
+        <div style="overflow-y: auto; height:150px; ">
+          {% for key, value in rates.items %}
+            <p id="">{{value}} <span>{{key}}</span></p>
+          {% endfor %}
+        </div>
+      <input type="submit" id="get_rates" value="Get Rates">
 
-      <input type="password" id="password" name="password" placeholder="password">
-
-      <input type="submit" id="login" value="Login">
     </form>
+    <p> Your balalnce in '{{ base_curr }}' : {{balance}} </b></p>
   </div>
 </body>
 

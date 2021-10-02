@@ -29,3 +29,12 @@ services:
       - "5432:5432"
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
+
+  # e2e:
+  #   container_name: e2e-testing
+  #   build:
+  #     context: .
+  #     dockerfile: e2e/Dockerfile
+  #   depends_on:
+  #     - "django"
+  #   command: npx cypress run

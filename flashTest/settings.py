@@ -152,3 +152,8 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# currencies 
+CURRENCIES_API = "http://api.exchangeratesapi.io/v1/latest"
+CURRENCIES_KEY = "71333be9c95b9dc282c7c0237778515d"

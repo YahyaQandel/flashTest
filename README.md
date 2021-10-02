@@ -16,13 +16,13 @@ ophelia     dmRzjkAR8Uw7AJBh    flash-user      ophelia@email.com
 
 ## Story 1 ( user can login using username or email )
 
-`post` request to `localhost:8000/oauth/token`
+`Post` request to `localhost:8000/oauth/token`
 ```
-curl --request POST  --url http://localhost:8000/oauth/token  --header 'Content-Type: application/json'  --data "{\"username\": \"ophelia\",\"password\": \"pass_#_user\"}"
+curl --request POST  --url http://localhost:8000/oauth/token  --header 'Content-Type: application/json'  --data "{\"username\": \"ophelia\",\"password\": \"dmRzjkAR8Uw7AJBh\"}"
 ```
 or
 ```
-curl --request POST  --url http://localhost:8000/oauth/token  --header 'Content-Type: application/json'  --data "{\"email\": \"ophelia@email.com\",\"password\": \"pass_#_user\"}"
+curl --request POST  --url http://localhost:8000/oauth/token  --header 'Content-Type: application/json'  --data "{\"email\": \"ophelia@email.com\",\"password\": \"dmRzjkAR8Uw7AJBh\"}"
 ```
 
 ## Story 2 ( user can connect his bank )
@@ -36,7 +36,7 @@ visit page localhost:8000/bank/connect
 ```
 curl --request POST  --url http://localhost:8000/oauth/token  --header 'Content-Type: application/json'  --data "{\"username\": \"cayden\",\"password\": \"8JmLGgZUsWKPcKUQ\"}"
 ```
-3- send `post` to `http://localhost:8000/api/v1/money/upload` using the `token`
+3- send `Post` to `http://localhost:8000/api/v1/money/upload` using the `token`
 ``` 
 curl --request POST  --url http://localhost:8000/api/v1/money/upload  --header 'Content-Type: application/json' --header 'Authorization: Basic TOKEN'  --data "{\"amount\": \"1000\"}" 
 ```
@@ -48,3 +48,10 @@ curl --request POST  --url http://localhost:8000/api/v1/money/upload  --header '
 curl --request GET  --url http://localhost:8000/api/v1/user/balance  --header 'Content-Type: application/json' --header 'Authorization: Bearer TOKEN'
 ```
 
+## Story 5 ( user can transfer money to another user )
+1- first you should login and get an `authentication token` to use it.
+2- user should have a connected bank account ( already set for user `cayden` in the fixtures )
+3- send `Post` request to `http://localhost:8000/api/v1/money/transfer/`
+```
+curl --request GET  --url http://localhost:8000/api/v1/money/transfer  --header 'Content-Type: application/json' --header 'Authorization: Bearer TOKEN' --data "{\"amount\": \"1000\",\"username\": \"viaan\"}" 
+```

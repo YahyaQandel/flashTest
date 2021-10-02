@@ -11,3 +11,18 @@ class MoneyUploaded(SoftDeletableModel):
     amount = MoneyField(max_digits=10, decimal_places=2, null=True, default_currency='EGP', default=0
                         )
     created_at = models.DateField(auto_now_add=True)
+
+class Transaction(SoftDeletableModel):
+    sender = models.ForeignKey(User, 
+                                blank=False, 
+                                null=False, 
+                                on_delete=models.CASCADE,
+                                related_name='sender')
+    amount = MoneyField(max_digits=10, decimal_places=2, null=True, default_currency='EGP', default=0
+                        )
+    recipient = models.ForeignKey(User, 
+                                    blank=False, 
+                                    null=False, 
+                                    on_delete=models.CASCADE,
+                                    related_name='recipient')
+    created_at = models.DateField(auto_now_add=True)

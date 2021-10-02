@@ -92,8 +92,6 @@ class TemplateLogin(APIView):
     class_serializer = LoginRequestSerializer
     
     def get(self, request):
-        # if request.session.session_key:
-        #     return redirect(to="/bank/connect")
         return Response()
 
     def post(self, request, format=None):
@@ -114,7 +112,6 @@ class TemplateLogin(APIView):
                 return redirect(to="/bank/connected")
         else:
             return redirect(to="/unauthorized")
-
 
 class UnAuthorized(APIView):
     renderer_classes = [TemplateHTMLRenderer]
@@ -151,8 +148,8 @@ def validate_login_request_params(request):
         return True, login_args
     else:
         return False, Response(
-            data={"detail": "either provide your email or your username"},
-            status=status.HTTP_401_UNAUTHORIZED)
+            data={"detail": "either provide an email or a username"},
+            status=status.HTTP_400_BAD_REQUEST)
     
 
 class Balance(APIView):
