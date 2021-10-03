@@ -1,7 +1,8 @@
 {
-  "baseUrl": "http://localhost:8000",
+  "baseUrl": "http://django:8000",
   "viewportWidth": 1280,
   "viewportHeight": 660,
   "testFiles": "**/*.feature",
+  "retries": 2,
   "video": false
 }

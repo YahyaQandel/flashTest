@@ -11,8 +11,13 @@ viaan       Jvuh6MUCX5H9Veq6    flash-user      viaan@email.com
 ophelia     dmRzjkAR8Uw7AJBh    flash-user      ophelia@email.com
 ```
 
+## Stories
+#### it is a prerequisite to have `docker` and `docker-compose` installed on your machine and a good internet connection.
 #### for the all upcoming stories you just needs to have good internet connection and to run
-#### `docker-compose up` and try using insomnia or DHC chrome extension or curl if you prefer
+```
+docker-compose up django postgres
+```
+ and try using insomnia or DHC chrome extension or curl if you prefer
 
 ### Story 1 ( user can login using username or email )
 
@@ -56,7 +61,7 @@ curl --request GET  --url http://localhost:8000/api/v1/user/balance  --header 'C
 curl --request GET  --url http://localhost:8000/api/v1/money/transfer  --header 'Content-Type: application/json' --header 'Authorization: Bearer TOKEN' --data "{\"amount\": \"1000\",\"username\": \"viaan\"}" 
 ```
 
-### Story 5 ( user can transfer money to another user )
+### Story 6 ( user can transfer money to another user )
 1- login to system from `localhost:800:/login` using one of the registered users above
 2- visit `localhost:800:/money/currency/exchange`
 `note` if user has a balance, you can view his new balance in exchanged rate according to
@@ -65,24 +70,33 @@ selected base currency
 
 
 
-### tests
-#### unit tests
+## tests
+### unit tests
+- without docker
 ```
 source venv/bin/activate
 source store-postgres-creds.sh
 ./manage test
 ```
 or 
+- using docker
 ```
 docker-compose run django python3 manage.py test
 ```
 
-#### e2e tests
+### e2e tests
 the server should be running 
 `docker-compose up`
 from another termianl 
+- without docker
+
+change `e2e/cypress.json`  baseurl from '`django:8000`' to '`localhost:8000`'
 ```
 cd e2e
 npm i
 npx cypress run
+```
+- using docker
+```
+docker-compose run e2e npx cypress run
 ```
