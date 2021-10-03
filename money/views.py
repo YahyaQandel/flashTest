@@ -38,13 +38,14 @@ class CurrencyExchange(APIView):
             try:
                 user = get_logged_in_user(request)
             except Session.DoesNotExist:
-                return redirect(to="/login")
+                return redirect(to= "/login")
             default_base_cur = 'EUR'
             rates = self.get_currenceis_rate(default_base_cur)
+            currencies = self.get_currencies_from_rate_api(rates)
             new_balance_in_default_rate = self.get_user_balance_in_currency(user,default_base_cur)
             response_data = {'rates': rates,
-                            'balance' : new_balance_in_default_rate,
-                            'currencies': CURRENCIES,
+                            'balance': new_balance_in_default_rate,
+                            'currencies': currencies,
                             'base_curr': default_base_cur}
 
             return Response(response_data)
@@ -64,7 +65,8 @@ class CurrencyExchange(APIView):
         rates = self.get_currenceis_rate (base_currency)
         user_currency = str(user.balance.currency)
         new_balance_in_default_rate = round(float(user.balance.amount ) * float(rates[user_currency]), 2)
-        return Response({'balance': new_balance_in_default_rate,'rates': rates,'currencies': CURRENCIES, 'base_curr': base_currency})
+        currencies = self.get_currencies_from_rate_api(rates);
+        return Response({'balance': new_balance_in_default_rate,'rates': rates,'currencies': currencies, 'base_curr': base_currency})
 
     def get_currenceis_rate(self, base_currency):
         ploads = {'access_key': settings.CURRENCIES_KEY}
@@ -83,6 +85,12 @@ class CurrencyExchange(APIView):
         user_currency = str(user.balance.currency)
         return round(float(user.balance.amount ) * float(rates[user_currency]), 2)
 
+
+    def get_currencies_from_rate_api(self, rates):
+        currencies = []
+        for currency , _ in rates.items():
+            currencies.append(currency)
+        return currencies
 class Upload(APIView):
     class_serializer = MoneyRequestSerializer
     permission_classes = (
