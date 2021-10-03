@@ -37,6 +37,7 @@ curl --request POST  --url http://localhost:8000/oauth/token  --header 'Content-
 
 ### Story 3 ( user can upload money to his flash account )
 1- user should have a connected bank account ( already set for user `cayden` in the fixtures )
+
 2- you should login and get an `authentication token` to use it.
 ```
 curl --request POST  --url http://localhost:8000/oauth/token  --header 'Content-Type: application/json'  --data "{\"username\": \"cayden\",\"password\": \"8JmLGgZUsWKPcKUQ\"}"
