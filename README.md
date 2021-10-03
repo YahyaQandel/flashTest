@@ -72,6 +72,10 @@ source venv/bin/activate
 source store-postgres-creds.sh
 ./manage test
 ```
+or 
+```
+docker-compose run django python3 manage.py test
+```
 
 #### e2e tests
 the server should be running 
