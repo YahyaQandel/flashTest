@@ -116,8 +116,10 @@ class Disconnect(APIView):
             account_number = request.GET['account_number']
             bank = Bank.objects.get(user=request.user, account_number=account_number)
             if not bank:
+                print(bank)
                 return Response(data={'error': 'account id not found'}, status=status.HTTP_404_NOT_FOUND)
         except Bank.DoesNotExist:
+            print('xxx')
             return Response(data={'error': 'account id not found'}, status=status.HTTP_404_NOT_FOUND)
         bank.delete()
         return Response(data={}, status=status.HTTP_200_OK)

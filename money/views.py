@@ -32,13 +32,13 @@ class CurrencyExchange(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'currency_exchange.html'
     class_serializer = CurrencyExchangeSerializer
-
+    LOGIN_PAGE_URL = "/login"
     def get(self, request):
         if request.session.session_key:
             try:
                 user = get_logged_in_user(request)
             except Session.DoesNotExist:
-                return redirect(to= "/login")
+                return redirect(to= self.LOGIN_PAGE_URL)
             default_base_cur = 'EUR'
             rates = self.get_currenceis_rate(default_base_cur)
             currencies = self.get_currencies_from_rate_api(rates)
@@ -56,16 +56,16 @@ class CurrencyExchange(APIView):
         if request.session.session_key:
             user = get_logged_in_user(request)
         else:
-            return redirect(to="/login")
+            return redirect(to= self.LOGIN_PAGE_URL)
         serializer = CurrencyExchangeSerializer(data=request.data)
         is_valid_params = serializer.is_valid(raise_exception=False)
         if not is_valid_params:
             return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         base_currency = request.data['currency']
-        rates = self.get_currenceis_rate (base_currency)
+        rates = self.get_currenceis_rate(base_currency)
         user_currency = str(user.balance.currency)
         new_balance_in_default_rate = round(float(user.balance.amount ) * float(rates[user_currency]), 2)
-        currencies = self.get_currencies_from_rate_api(rates);
+        currencies = self.get_currencies_from_rate_api(rates)
         return Response({'balance': new_balance_in_default_rate,'rates': rates,'currencies': currencies, 'base_curr': base_currency})
 
     def get_currenceis_rate(self, base_currency):

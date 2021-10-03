@@ -75,9 +75,9 @@
             <th>Rate</th>
           </tr>
           {% for key, value in rates.items %}
-          <tr>
-            <td id="curr_{{key}}">{{key}}</td>
-            <td>{{value}}</td>
+          <tr id="curr_key_rate_{{key}}">
+            <td id="currency_{{key}}">{{key}}</td>
+            <td id="currency_rate_{{key}}">{{value}}</td>
           </tr>
            {% endfor %}
         </table>
