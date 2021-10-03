@@ -1,0 +1,122 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "Test Flash User Login",
+    "line": 1,
+    "id": "test-flash-user-login",
+    "tags": [],
+    "uri": "exchenge-currency-rate.feature",
+    "elements": [
+      {
+        "id": "test-flash-user-login;verify-that-user-can-exchange-currency-rate-using-base-currency",
+        "keyword": "Scenario",
+        "line": 2,
+        "name": "verify that user can exchange currency rate using base currency",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 3,
+            "name": "there is a registered user",
+            "result": {
+              "status": "passed",
+              "duration": 442000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 4,
+            "name": "user visits login page",
+            "result": {
+              "status": "passed",
+              "duration": 92000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 5,
+            "name": "user logs in to system",
+            "result": {
+              "status": "passed",
+              "duration": 1030000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 6,
+            "name": "user visits currency exchange rate page",
+            "result": {
+              "status": "passed",
+              "duration": 1093000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "user selects base currency 'USD'",
+            "result": {
+              "status": "passed",
+              "duration": 847000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 8,
+            "name": "exchanged rate for currency \"EUR\" should be \"0.8\"",
+            "result": {
+              "status": "passed",
+              "duration": 55000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "exchanged rate for currency \"EGP\" should be \"15\"",
+            "result": {
+              "status": "passed",
+              "duration": 44000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "user change baes currency to \"GBP\"",
+            "result": {
+              "status": "passed",
+              "duration": 740000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "exchanged rate for currency \"EUR\" should be \"1\"",
+            "result": {
+              "status": "passed",
+              "duration": 62000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 12,
+            "name": "exchanged rate for currency \"EGP\" should be \"21\"",
+            "result": {
+              "status": "passed",
+              "duration": 53000000
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
