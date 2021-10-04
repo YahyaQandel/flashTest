@@ -9,6 +9,7 @@ from money.models import MoneyUploaded
 import moneyed
 from bank.factories import BankFactory
 from bank.models import Bank
+from money.views.config_parser import Config
 
 TOKEN_TYPE = 'Bearer'
 UPLOAD_MONEY_URL = "/api/v1/money/upload"
@@ -30,6 +31,7 @@ class TestMoneyUpload(TestCase):
         self.user = self.bank.user
         self.request_headers = get_request_authentication_headers(self.user)
         self.amount_to_be_uploaded = 0
+        self.config = Config()
 
     def testUploadInvalidMoneyValue(self):
         request_data = {"amount": "f"}
@@ -70,7 +72,7 @@ class TestMoneyUpload(TestCase):
         response_data = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertEqual(self.user.balance.amount, user_old_balance)
-        self.assertIn('You have exceeded your weekly limit (50k)'.format(date.today()), response_data['error'])
+        self.assertIn('You have exceeded your weekly limit ({})'.format(self.config.get_weekly_limit(),date.today()), response_data['error'])
 
     def testUploadMoneyNotExceedingWeeklyLimit(self):
         request_data = {"amount": Decimal(100)}
@@ -102,7 +104,7 @@ class TestMoneyUpload(TestCase):
         response_data = response.json()
         self.assertEquals(response.status_code, 400)
         self.assertEqual(self.user.balance.amount, user_old_balance)
-        self.assertIn('You have exceeded your daily limit (10k) for ({})'.format(date.today()), response_data['error'])
+        self.assertIn('You have exceeded your daily limit ({}) for ({})'.format(self.config.get_daily_limit(),date.today()), response_data['error'])
 
     def testUploadAmountThatExceedsDailyLimitInOneTransaction(self):
         user_old_balance = self.user.balance.amount

@@ -1,3 +1,4 @@
+from django import conf
 from django.test import TestCase
 from rest_framework.test import APIClient
 from user.factories import UserFactory
@@ -21,6 +22,7 @@ import moneyed
 from user.tests.utils import get_request_authentication_headers
 from bank.factories import BankFactory
 from bank.models import Bank
+from money.views.config_parser import Config
 
 TOKEN_TYPE = 'Bearer'
 TRANSFER_MONEY_URL = "/api/v1/money/transfer"
@@ -37,7 +39,7 @@ class TestTransfer(TestCase):
         self.request_headers = get_request_authentication_headers(self.user)
         self.amount_to_be_transferred= 0
         self.recipient_user = UserFactory()
-
+        self.config = Config()
     # test user authorized to transfer
 
     def testInsufficientBalanceFails(self):
@@ -83,7 +85,7 @@ class TestTransfer(TestCase):
         request_data = {"amount": Decimal(101), "username": self.recipient_user.username}
         response = self.api_client.post(TRANSFER_MONEY_URL, data=request_data, **self.request_headers)
         response_data = response.json()
-        self.assertIn('You have exceeded your daily transfer limit (10k) for ({})'.format(date.today()), response_data['error'])
+        self.assertIn('You have exceeded your daily transfer limit ({}) for ({})'.format(self.config.get_daily_limit(),date.today()), response_data['error'])
         self.assert_failure_400_and_sender_and_recipient_balances_not_changed(response,
                                                         sender_user_balance_before_transfer_operation,
                                                         recipient_user_balance_before_transfer_operation)
@@ -123,7 +125,7 @@ class TestTransfer(TestCase):
         recipient_user_balance_before_transfer_operation = self.recipient_user.balance.amount
         response = self.api_client.post(TRANSFER_MONEY_URL, data=request_data, **self.request_headers)
         response_data = response.json()
-        self.assertIn('You have exceeded your weekly transfer limit (50k)'.format(date.today()), response_data['error'])
+        self.assertIn('You have exceeded your weekly transfer limit ({})'.format(self.config.get_weekly_limit()), response_data['error'])
         self.assert_failure_400_and_sender_and_recipient_balances_not_changed(response,
                                                         sender_user_balance_before_transfer_operation,
                                                         recipient_user_balance_before_transfer_operation)
