@@ -13,7 +13,7 @@ ophelia     dmRzjkAR8Uw7AJBh    flash-user      ophelia@email.com
 
 ## Stories
 #### it is a prerequisite to have `docker` and `docker-compose` installed on your machine and a good internet connection.
-#### for the all upcoming stories you just needs to have good internet connection and to run
+#### for the all upcoming stories you just need to have good internet connection and to run
 ```
 docker-compose up django postgres
 ```

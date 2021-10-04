@@ -7,7 +7,6 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from user.views import validate_login_request_params
 
 from datetime import date, datetime, timedelta
 
@@ -162,7 +161,7 @@ class Transfer(APIView):
     def post(self, request):
         serializer = TransferRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        is_valid_params, response = validate_login_request_params(request)
+        is_valid_params, response = User.serialize_params(request)
         if not is_valid_params:
             return response
         user_params = response

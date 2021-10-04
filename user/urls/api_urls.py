@@ -1,5 +1,5 @@
 from django.urls import path
-from user.views import Register, Remove, Balance
+from user.views.api_views import Register, Remove, Balance
 
 urlpatterns = [
     path("register", Register.as_view(), name="register"),

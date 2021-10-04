@@ -119,7 +119,6 @@ class Disconnect(APIView):
                 print(bank)
                 return Response(data={'error': 'account id not found'}, status=status.HTTP_404_NOT_FOUND)
         except Bank.DoesNotExist:
-            print('xxx')
             return Response(data={'error': 'account id not found'}, status=status.HTTP_404_NOT_FOUND)
         bank.delete()
         return Response(data={}, status=status.HTTP_200_OK)
