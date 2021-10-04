@@ -1,14 +1,6 @@
-from decimal import Decimal
-import re
 from moneyed.classes import EGP
-from rest_framework import status
-from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from django.http import HttpResponseRedirect
-
-from datetime import date, datetime, timedelta
 
 from user.models import User
 from user.serializer import LoginRequestSerializer
@@ -17,10 +9,8 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from bank.views import is_user_connected_to_bank
 
-from rest_framework import permissions
-from rest_framework.generics import CreateAPIView
 from django.contrib.auth.decorators import user_passes_test
-from user.serializer import RegisterUserSerializer, LoginRequestSerializer
+from user.serializer import  LoginRequestSerializer
 
 class TemplateLogin(APIView):
     renderer_classes = [TemplateHTMLRenderer]
