@@ -99,5 +99,5 @@ npx cypress run
 ```
 - using docker
 ```
-docker-compose --rm run e2e npx cypress run
+bash build-and-run-e2e.sh
 ```
