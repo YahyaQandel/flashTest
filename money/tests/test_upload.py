@@ -10,17 +10,11 @@ import moneyed
 from bank.factories import BankFactory
 from bank.models import Bank
 from money.views.config_parser import Config
+from user.tests.utils import get_request_authentication_headers
 
 TOKEN_TYPE = 'Bearer'
 UPLOAD_MONEY_URL = "/api/v1/money/upload"
 
-
-def get_request_authentication_headers(user):
-    user_token = Token.objects.get(user_id=user.id)
-    request_headers = {'HTTP_AUTHORIZATION': '{} {}'.format(TOKEN_TYPE, user_token)}
-    return request_headers
-
-# Create your tests here.
 
 
 class TestMoneyUpload(TestCase):
