@@ -22,7 +22,7 @@
             "name": "there is a registered user without connecting his bank account",
             "result": {
               "status": "passed",
-              "duration": 538000000
+              "duration": 453000000
             }
           },
           {
@@ -32,7 +32,7 @@
             "name": "user visits login page",
             "result": {
               "status": "passed",
-              "duration": 106000000
+              "duration": 211000000
             }
           },
           {
@@ -42,7 +42,7 @@
             "name": "user logs in to system",
             "result": {
               "status": "passed",
-              "duration": 1004000000
+              "duration": 783000000
             }
           },
           {
@@ -52,7 +52,7 @@
             "name": "user will be redirected to \"/bank/connect\" that verifies he didnt connect his bank account",
             "result": {
               "status": "passed",
-              "duration": 18000000
+              "duration": 10000000
             }
           }
         ]
@@ -72,7 +72,7 @@
             "name": "there is a registered user without connecting his bank account",
             "result": {
               "status": "passed",
-              "duration": 44000000
+              "duration": 27000000
             }
           },
           {
@@ -82,7 +82,7 @@
             "name": "that user has connected his bank account",
             "result": {
               "status": "passed",
-              "duration": 260000000
+              "duration": 180000000
             }
           },
           {
@@ -92,7 +92,7 @@
             "name": "user visits login page",
             "result": {
               "status": "passed",
-              "duration": 111000000
+              "duration": 91000000
             }
           },
           {
@@ -102,7 +102,7 @@
             "name": "user logs in to system",
             "result": {
               "status": "passed",
-              "duration": 967000000
+              "duration": 848000000
             }
           },
           {
@@ -112,7 +112,57 @@
             "name": "user will be redirected to \"/bank/connected\" that verifies he has connected his bank account",
             "result": {
               "status": "passed",
-              "duration": 4000000
+              "duration": 6000000
+            }
+          }
+        ]
+      },
+      {
+        "id": "test-flash-user-login;verify-login-using-invalid-credentials-will-not-be-authorized",
+        "keyword": "Scenario",
+        "line": 16,
+        "name": "verify login using invalid credentials will not be authorized",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 17,
+            "name": "system is up",
+            "result": {
+              "status": "passed",
+              "duration": 22000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 18,
+            "name": "user visits login page",
+            "result": {
+              "status": "passed",
+              "duration": 52000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "user uses invalid username and password to login",
+            "result": {
+              "status": "passed",
+              "duration": 11365000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 20,
+            "name": "user will be redirected to \"/unauthorized\" page",
+            "result": {
+              "status": "passed",
+              "duration": 1312000000
             }
           }
         ]

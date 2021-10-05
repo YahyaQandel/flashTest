@@ -13,5 +13,12 @@ Feature: Test Flash User Login
 		And user logs in to system
         Then user will be redirected to "/bank/connected" that verifies he has connected his bank account
 
+	Scenario: verify login using invalid credentials will not be authorized
+		Given system is up
+		When user visits login page
+		And user uses invalid username and password to login
+        Then user will be redirected to "/unauthorized" page
+
+
 
 #TODO: invalid login scenario

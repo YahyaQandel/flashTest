@@ -7,6 +7,10 @@ export class Bank {
         accountNumberFieldID: '#acc_number',
         accountHolderNameFieldID: '#acc_holder',
         connectBtnID: '#connect',
+        bankNameValidationSpan: "#bank_name_validation",
+        branchNumberValidationSpan: "#branch_number_validation",
+        accountHolderNameValidationSpan: "#account_holder_name_validation",
+        accountNumberValidationSpan: "#account_number_validation",
     };
     private url: string = "bank/connect";
 
@@ -35,6 +39,22 @@ export class Bank {
         return result;
     }
     get_bank(){
-    return ["HSBC","CIB","QNB"][Math.floor(Math.random() * ["HSBC","CIB","QNB"].length)];
+        return ["HSBC","CIB","QNB"][Math.floor(Math.random() * ["HSBC","CIB","QNB"].length)];
+    }
+
+    get bankNameValidationSpan(){
+        return cy.get(this.elementsIDs.bankNameValidationSpan);
+    }
+
+    get branchNumberValidationSpan(){
+        return cy.get(this.elementsIDs.branchNumberValidationSpan);
+    }
+
+    get accountNumberValidationSpan(){
+        return cy.get(this.elementsIDs.accountNumberValidationSpan);
+    }
+
+    get accountHolderNameValidationSpan(){
+        return cy.get(this.elementsIDs.accountHolderNameFieldID);
     }
 }

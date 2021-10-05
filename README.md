@@ -99,5 +99,5 @@ npx cypress run
 ```
 - using docker
 ```
-docker-compose run e2e npx cypress run
+docker-compose --rm run e2e npx cypress run
 ```

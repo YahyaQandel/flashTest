@@ -15,7 +15,7 @@ let bankApi = new BankApi();
 let bankName = "";
 let testUser = new UserFactory();
 let userApi = new UserApi();
-before(()=>{
+beforeEach(()=>{
   userApi.register(testUser);
 })
 Given('there is no registered users', () => {
@@ -40,7 +40,6 @@ When('user logs in to system', () => {
 });
 
 When('fill bank field {string} and branch name {string} and account number {string} and account holder name {string}', (_bank, branchName: string, _accountNumber: string, accountHolderName: string) => {
-  
   accountNumber = bankPage.generate_random_account_number();
   bankName = bankPage.get_bank();
   bankPage.fillFields(bankName,branchName,accountNumber,accountHolderName);
@@ -48,31 +47,41 @@ When('fill bank field {string} and branch name {string} and account number {stri
   bankPage.connectBtn.click();
   cy.wait('@connected_url');
 });
+When('user leaves fields empty and presses connect', () => {
+  cy.intercept("/bank/connect").as("connect_bank")
+  bankPage.connectBtn.click();
+  cy.wait('@connect_bank');
 
-Then('user will be redirected to {string} to login', (login_page_url: string) => {
+});
+
+Then('user will be redirected to {string}', (login_page_url: string) => {
    cy.url().should(
     'equal',
     `${Cypress.config().baseUrl}${login_page_url}`
   );
 });
 
-Then('user will be redirected to {string} bank connected', (bank_connected_url: string) => {
-   cy.url().should(
-    'equal',
-    `${Cypress.config().baseUrl}${bank_connected_url}`
-  );
+Then('form validation spans will be visible', () => {
+  bankPage.branchNumberValidationSpan.should('be.visible');
+  bankPage.accountNumberValidationSpan.should('be.visible');
+  bankPage.accountHolderNameValidationSpan.should('be.visible');
 });
+
 
 Then('bank name should be {string} and account number should be {string}', (_bank: string, _:string) => {
     bankConnectedPage.bankNameSpan.should('have.text', bankName);
     bankConnectedPage.accountNumberSpan.should('have.text', accountNumber);
+    
     // teardown
     userapiObj.login(testUser.username,testUser.password).then(userLoginApiResponse => {
       let userToken = userLoginApiResponse.body.token;
       bankApi.deleteAccount(userToken,accountNumber);
-      userapiObj.login(SuperUser.username,SuperUser.password).then(superUserLoginApiResponse => {
-          let superUserToken = superUserLoginApiResponse.body.token;
-          userapiObj.delete(superUserToken,testUser.username);  
-      });
   });
+});
+
+afterEach(()=>{
+    userapiObj.login(SuperUser.username,SuperUser.password).then(superUserLoginApiResponse => {
+        let superUserToken = superUserLoginApiResponse.body.token;
+        userapiObj.delete(superUserToken,testUser.username);  
+    });
 });

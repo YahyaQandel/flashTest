@@ -98,23 +98,6 @@
             }
         }
     </style>
-    <script>
-        var str = document.getElementsByTagName('div')[0].innerHTML.toString();
-        var i = 0;
-        document.getElementsByTagName('div')[0].innerHTML = "";
-
-        setTimeout(function() {
-            var se = setInterval(function() {
-                i++;
-                document.getElementsByTagName('div')[0].innerHTML = str.slice(0, i) + "|";
-                if (i == str.length) {
-                    clearInterval(se);
-                    document.getElementsByTagName('div')[0].innerHTML = str;
-                }
-            }, 10);
-        },0);
-
-    </script>
 </head>
 
 <body>
@@ -123,7 +106,7 @@
         <p>> <span>ERROR CODE</span>: "<i>HTTP 403 Forbidden</i>"</p>
         <p>> <span>ERROR DESCRIPTION</span>: "<i>Access Denied. You Do Not Have The Permission To Access This Page On
                 This Server</i>"</p>
-       
+
         <p>> <span>HAVE A NICE DAY SIR Flash :-)</span></p>
         <p>> <span><a href="/login"><u>Login again</u></a></span></p>
     </div>

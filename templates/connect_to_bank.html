@@ -59,19 +59,19 @@
         <option value="QNB">QNB</option>
       </select>
       {% if 'bank_name' in errors %}
-        <span class="required_error">Bank name is required</span>
+        <span id="bank_name_validation" class="required_error">Bank name is required</span>
       {% endif %}
       <input type="text" id="branch_number" name="branch_number" placeholder="Branch Number">
       {% if 'branch_number' in errors %}
-      <span class="required_error">Branch number is required</span>
+      <span id="branch_number_validation" class="required_error">Branch number is required</span>
       {% endif %}
       <input type="text" id="acc_number" name="account_number" placeholder="Account number" >
       {% if 'account_number' in errors %}
-      <span class="required_error">Account number is required</span>
+      <span id="account_number_validation" class="required_error">Account number is required</span>
       {% endif %}
       <input type="text" id="acc_holder" name="account_holder_name" placeholder="Account holder's name" >
       {% if 'account_holder_name' in errors %}
-      <span class="required_error">Account Holder name is required</span>
+      <span id="account_holder_name_validation" class="required_error">Account Holder name is required</span>
       {% endif %}
       <input type="text" id="name_ref" name="name_ref" placeholder="Name/Reference">
 

@@ -14,9 +14,13 @@ let bank = new BankFactory();
 
 before(()=>{
   userApi.register(testUser);
-  console.log('reg:user')
-  console.log(testUser)
 })
+
+Given('system is up', (a: string) => {
+  // user already in system fixtures
+});
+
+
 Given('there is a registered user without connecting his bank account', (a: string) => {
   // user already in system fixtures
 });
@@ -36,6 +40,9 @@ When('user logs in to system', () => {
   loginPage.perform(testUser.username,testUser.password);
 });
 
+When('user uses invalid username and password to login', () => {
+  loginPage.perform("username","password");
+});
 
 Then('user will be redirected to {string} that verifies he has connected his bank account', (logged_in_url: string) => {
   cy.url().should(
@@ -48,6 +55,13 @@ Then('user will be redirected to {string} that verifies he didnt connect his ban
   cy.url().should(
     'equal',
     `${Cypress.config().baseUrl}${logged_in_url}`
+  );
+});
+
+Then('user will be redirected to {string} page', (unauthorized_login_url: string) => {
+  cy.url().should(
+    'equal',
+    `${Cypress.config().baseUrl}${unauthorized_login_url}`
   );
 });
 
