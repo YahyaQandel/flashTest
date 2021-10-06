@@ -1,5 +1,7 @@
 # Flash Task
 
+![example workflow](https://github.com/YahyaQandel/flashtest/actions/workflows/main.yml/badge.svg)
+
 #### according to the sotries written there is no need to register users, so i created some users and set their own data to test on it.
 
 ### Users in system:-
@@ -101,3 +103,5 @@ npx cypress run
 ```
 bash build-and-run-e2e.sh
 ```
+
+####

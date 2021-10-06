@@ -27,6 +27,6 @@ jobs:
           docker-compose run django python3 manage.py test
 
 
-      - name: run test cases
+      - name: run e2e test cases
         run: |
           bash build-and-run-e2e.sh
