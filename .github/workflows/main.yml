@@ -20,14 +20,12 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install Dependencies
         run: |
-          ls requirements.dev.txt
-          docker-compose up
           docker-compose up --detach django postgres
 
-      # - name: Sleep for 30 seconds
-      #   run: sleep 30s
-      #   shell: bash
+      - name: Sleep for 30 seconds
+        run: sleep 30s
+        shell: bash
 
-      # - name: run test cases
-      #   run: |
-      #     docker-compose run django python3 manage.py test
+      - name: run test cases
+        run: |
+          docker-compose run django python3 manage.py test
