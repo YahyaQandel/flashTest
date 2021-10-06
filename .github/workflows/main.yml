@@ -15,7 +15,9 @@ jobs:
     steps:
       - name: build the application
         run: |
-          docker-compose up -d django postgres
+          ls
+          pwd
+          docker-compose  up -d django postgres
 
       - name: Sleep for 30 seconds
         run: sleep 30s
