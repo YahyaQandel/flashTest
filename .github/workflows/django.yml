@@ -27,4 +27,5 @@ jobs:
         pip install -r requirements.dev.txt
     - name: Run Tests
       run: |
+        source store-postgres-creds.sh
         python manage.py test
