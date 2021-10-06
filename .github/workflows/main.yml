@@ -23,9 +23,14 @@ jobs:
           docker-compose up --detach django postgres
 
       - name: Sleep for 30 seconds
-        run: sleep 5m
+        run: sleep 2m
         shell: bash
+
+      - name: run unit test cases
+        run: |
+          docker-compose run django python3 manage.py test
+
 
       - name: run test cases
         run: |
-          docker-compose run django python3 manage.py test
+          bash build-and-run-e2e.sh
