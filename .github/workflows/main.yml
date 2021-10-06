@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: build the application
         run: |
-          docker-compose --version
+          docker-compose up --detach django postgres
 
       # - name: Sleep for 30 seconds
       #   run: sleep 30s
