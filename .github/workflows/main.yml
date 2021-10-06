@@ -2,11 +2,10 @@ name: Django CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -14,15 +13,14 @@ jobs:
         python-version: [3.7, 3.8, 3.9]
 
     steps:
-    - name: build the application
-      uses: actions/checkout@v2
-      run: |
-        docker-compose up -d django postgres
-    - name: sleep for a minute
-      uses: jakejarvis/wait-action@master
-      with:
-      time: '60s'
-    - name: run test cases
-      uses: actions/checkout@v2
-      run: |
-        docker-compose run django python3 manage.py test
+      - name: build the application
+        run: |
+          docker-compose up -d django postgres
+
+      - name: Sleep for 30 seconds
+        run: sleep 30s
+        shell: bash
+
+      - name: run test cases
+        run: |
+          docker-compose run django python3 manage.py test
