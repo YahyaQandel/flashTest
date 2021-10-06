@@ -12,3 +12,15 @@ jobs:
       matrix:
         python-version: [3.8]
 
+    steps:
+      - name: build the application
+        run: |
+          docker-compose --version
+
+      # - name: Sleep for 30 seconds
+      #   run: sleep 30s
+      #   shell: bash
+
+      # - name: run test cases
+      #   run: |
+      #     docker-compose run django python3 manage.py test
