@@ -18,12 +18,12 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Dependencies
+      - name: build system
         run: |
           docker-compose up --detach django postgres
 
       - name: Sleep for 30 seconds
-        run: sleep 30s
+        run: sleep 5m
         shell: bash
 
       - name: run test cases
