@@ -15,12 +15,7 @@ jobs:
     steps:
       - name: build the application
         run: |
-          ls
-          cd ..
-          pwd
-          cd ..
-          pwd
-          ls
+        find .
 
       - name: Sleep for 30 seconds
         run: sleep 30s
