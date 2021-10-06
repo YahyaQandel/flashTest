@@ -17,7 +17,6 @@ jobs:
         run: |
           ls
           pwd
-          docker-compose  up -d django postgres
 
       - name: Sleep for 30 seconds
         run: sleep 30s
