@@ -16,7 +16,7 @@ jobs:
       - name: build the application
         run: |
           ls
-          ls docker-compose.yml
+          ls requirements.dev.txt
           docker-compose up
           docker-compose up --detach django postgres
 
