@@ -10,13 +10,17 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.8]
 
     steps:
       - name: build the application
         run: |
           ls
+          cd ..
           pwd
+          cd ..
+          pwd
+          ls
 
       - name: Sleep for 30 seconds
         run: sleep 30s
