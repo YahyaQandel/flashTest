@@ -13,10 +13,12 @@ jobs:
         python-version: [3.8]
 
     steps:
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: build the application
         run: |
-          ls
-          ls requirements.dev.txt
           docker-compose up
           docker-compose up --detach django postgres
 
